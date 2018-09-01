@@ -2,15 +2,10 @@ const socket = io();
 
 socket.on("connect", () => {
   console.log("Client connected to server");
-
-  socket.emit("createMessage", {
-    to: "mom@mom.com",
-    text: "Zhou zan"
-  });
 });
 
 socket.on("newMessage", newMessage => {
-  console.log(newMessage);
+  console.log("newMessage", newMessage);
 });
 
 socket.on("disconnect", () => {
