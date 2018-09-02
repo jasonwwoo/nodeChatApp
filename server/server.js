@@ -25,14 +25,10 @@ io.on("connection", socket => {
     generateMessage("Admin", "A new user has joined the Chat Group.")
   );
 
-  socket.on("createMessage", message => {
+  socket.on("createMessage", (message, callback) => {
     console.log("createMessage", message);
     io.emit("newMessage", generateMessage(message.from, message.text));
-    // socket.broadcast.emit("newMessage", {
-    //   from: message.from,
-    //   text: message.text,
-    //   createdAt: new Date().getTime()
-    // });
+    callback("Hi from server");
   });
 
   socket.on("disconnect", () => {
