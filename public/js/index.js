@@ -12,6 +12,18 @@ socket.on("newMessage", newMessage => {
   ol.appendChild(li);
 });
 
+socket.on("newLocationMessage", message => {
+  let li = document.createElement("li");
+  let a = document.createElement("a");
+  a.textContent = "My current Location";
+  a.setAttribute("target", "_blank");
+
+  li.textContent = `${message.from}: `;
+  a.setAttribute("href", message.url);
+  li.appendChild(a);
+  document.querySelector("#messages").appendChild(li);
+});
+
 socket.on("disconnect", () => {
   console.log("Client disconnected from server");
 });
@@ -28,7 +40,23 @@ document.querySelector("#message-form").addEventListener("submit", function(e) {
   );
 });
 
-//ack allows listener to send back data to emitter
+const locationButton = document.querySelector("#send-location");
+locationButton.addEventListener("click", function() {
+  if (!navigator.geolocation) {
+    return alert("Geolocation not supported by your browser");
+  }
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      socket.emit("createLocationMessage", {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+      });
+    },
+    () => {
+      alert("Unable to fetch location");
+    }
+  );
+});
 
 // EMAIL EXAMPLE
 //   socket.emit("createdEmail", {

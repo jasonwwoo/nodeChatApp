@@ -8,8 +8,10 @@ const port = process.env.PORT || 3000;
 const app = express();
 const server = http.createServer(app);
 const io = socketIO(server);
-const { generateMessage } = require("./utils/message");
+const { generateMessage, generateLocationMessage } = require("./utils/message");
 
+//newMessage handles the message creation and sending process
+//createMessage is from the user, and when called emits newMessage
 app.use(express.static(publicPath));
 
 io.on("connection", socket => {
@@ -29,6 +31,13 @@ io.on("connection", socket => {
     console.log("createMessage", message);
     io.emit("newMessage", generateMessage(message.from, message.text));
     callback("Hi from server");
+  });
+
+  socket.on("createLocationMessage", coords => {
+    io.emit(
+      "newLocationMessage",
+      generateLocationMessage("Admin", coords.latitude, coords.longitude)
+    );
   });
 
   socket.on("disconnect", () => {
