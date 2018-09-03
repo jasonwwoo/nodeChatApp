@@ -6,9 +6,10 @@ socket.on("connect", () => {
 
 socket.on("newMessage", newMessage => {
   console.log("newMessage", newMessage);
+  const formattedTime = moment(newMessage.createdAt).format("h:mm a");
   const li = document.createElement("li");
   const ol = document.querySelector("#messages");
-  li.textContent = `${newMessage.from}: ${newMessage.text} `;
+  li.textContent = `${newMessage.from} ${formattedTime}: ${newMessage.text} `;
   ol.appendChild(li);
 });
 
@@ -17,8 +18,10 @@ socket.on("newLocationMessage", message => {
   let a = document.createElement("a");
   a.textContent = "My current Location";
   a.setAttribute("target", "_blank");
+  let formattedTime = moment(message.createdAt).format("h:mm a");
+  // let formattedTime = moment(12 - 25 - 1995, "MM-DD-YYYY");
 
-  li.textContent = `${message.from}: `;
+  li.textContent = `${message.from} ${formattedTime}: `;
   a.setAttribute("href", message.url);
   li.appendChild(a);
   document.querySelector("#messages").appendChild(li);
