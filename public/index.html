@@ -2,48 +2,32 @@
 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta http-equiv="X-UA-Compatible">
-  <title>Document</title>
+  <link rel="stylesheet" href="/css/styles.css">
+
+  <title>Join | ChatApp</title>
 </head>
 
-<body>
-  <h1>Hello from nodeChatApp</h1>
-  <ol id="messages">
-
-  </ol>
-  <form action="" id="message-form">
-    <input type="text" name="message" placeholder="Message" autofocus autocomplete="off" />
-    <button>Send</button>
-  </form>
-  <button id="send-location">Send location</button>
-
-  <script id="message-template" type="text/template">
-    <li class="message">
-      <div class="messageTitle">
-        <h4>{{from}}</h4>
-        <span>{{createdAt}}</span>
+<body class="centered-form">
+  <div class="centered-form__form">
+    <form action="/chat.html">
+      <div class="form-field">
+        <h3>Join a Chat</h3>
       </div>
-      <div class="messageBody">
-        <p>{{text}}</p>
+      <div class="form-field">
+        <label>Display Name</label>
+        <input type="text" name="name" />
       </div>
-    </li>
-  </script>
-  <script id="location-message-template" type="text/template">
-    <li class="message">
-      <div class="messageTitle">
-        <h4>{{from}}</h4>
-        <span>{{createdAt}}</span>
+      <div class="form-field">
+        <label>Room Name</label>
+        <input type="text" name="room" />
       </div>
-      <div class="messageBody">
-        <a href="{{url}}" target="_blank">My Current Location<a>
+      <div class="form-field">
+        <button>Join</button>
       </div>
-    </li>
-  </script>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/js/libs/moment.js"></script>
-  <script src="/js/libs/mustache.js"></script>
-  <script src="/js/index.js"></script>
+    </form>
+  </div>
 </body>
 
 </html>
