@@ -26,7 +26,34 @@ function scrollToBottom() {
 }
 
 socket.on("connect", () => {
-  console.log("Client connected to server");
+  const params = jQuery.deparam(window.location.search);
+
+  socket.emit("join", params, err => {
+    if (err) {
+      alert(err);
+      window.location.href = "/";
+    } else {
+      console.log("No error");
+    }
+  });
+});
+
+socket.on("updateUserList", users => {
+  let ol = document.createElement("ol");
+
+  users.forEach(user => {
+    let li = document.createElement("li");
+    let name = document.createTextNode(user);
+    li.appendChild(name);
+    ol.appendChild(li);
+    // let li = document.createElement("li");
+    // let name = document.createTextNode(user);
+    // li.appendChild(name);
+    // ol.appendChild(li);
+  });
+
+  document.querySelector("#users").innerHTML = "";
+  document.querySelector("#users").appendChild(ol);
 });
 
 socket.on("newMessage", newMessage => {
